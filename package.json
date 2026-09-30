@@ -1,0 +1,24 @@
+{
+  "name": "enso-maker",
+  "version": "1.0.0",
+  "description": "Enso Maker: generate the Zen circle as a brush painting, with dry-brush streaks, ink, paper and a red seal, or draw your own, then download it as SVG or PNG.",
+  "repository": "github:evoluteur/enso-maker",
+  "homepage": "https://evoluteur.github.io/enso-maker/",
+  "copyright": "(c) 2026 Olivier Giulieri",
+  "author": "Olivier Giulieri (https://evoluteur.github.io/)",
+  "license": "MIT",
+  "keywords": [
+    "enso",
+    "enso-circle",
+    "zen",
+    "zen-circle",
+    "sumi-e",
+    "japanese-calligraphy",
+    "brush",
+    "generative-art",
+    "svg",
+    "esoteric",
+    "esoterica",
+    "mystic"
+  ]
+}

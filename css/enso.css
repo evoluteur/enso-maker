@@ -1,0 +1,183 @@
+#omg-header {
+  z-index: 450;
+}
+
+/* core.css is shared across other projects, so the theme-picker's swatch
+   styling stays untouched there -- this overrides it to render icons
+   (sun/moon/spiral, same set as react-morph-charts' ThemeToggle) instead of
+   plain colored circles, without needing to edit the shared file. */
+#omg-theme-picker {
+  gap: 2px;
+}
+#omg-theme-picker > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: none;
+  color: currentColor;
+  opacity: 0.75;
+}
+#omg-theme-picker > a:hover {
+  opacity: 1;
+}
+#omg-theme-picker > a.selected {
+  opacity: 1;
+}
+
+/* GitHub link, just below the theme toggle */
+#omg-github {
+  position: absolute;
+  top: 34px;
+  right: 4px; /* centred under the last toggle icon */
+  margin-top: 12px;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: none;
+  opacity: 0.75;
+}
+#omg-github svg {
+  width: 30px; /* same size in every theme (the themes' generic svg rule differs) */
+  height: 30px;
+}
+html[data-theme="evol-blue"] #omg-github svg {
+  fill: white; /* like the theme toggle icons on the blue background */
+}
+#omg-github:hover,
+#omg-github:focus-visible {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------- enso */
+
+.content {
+  max-width: 980px;
+}
+.enso-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+.art-wrap {
+  position: relative;
+  flex: 0 1 600px;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+  background: repeating-conic-gradient(#8883 0 25%, transparent 0 50%) 0 0 / 20px 20px; /* shows through a transparent paper */
+}
+.art,
+.guide {
+  position: absolute;
+  inset: 0;
+}
+.guide {
+  pointer-events: none;
+}
+.art svg,
+.guide svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+}
+.art svg:hover {
+  fill: none;
+}
+.art-wrap.drawing .art {
+  cursor: crosshair;
+  touch-action: none; /* drawing with a finger must not scroll the page */
+}
+.controls {
+  flex: 0 0 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.95em;
+}
+.controls label.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.controls select {
+  font: inherit;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+}
+.controls input[type="range"] {
+  width: 100%;
+  accent-color: #b8231c;
+}
+.new-btn,
+.downloads button {
+  margin: 0;
+}
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.draw-hint,
+.share-note,
+.note {
+  margin: 0;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+.draw-hint:empty {
+  display: none;
+}
+.explain p {
+  max-width: 680px;
+  line-height: 1.55;
+}
+.explain .note {
+  margin-top: 8px;
+}
+.footer {
+  margin-top: 40px;
+}
+html[data-theme="light"] .controls button.secondary {
+  color: #1a212d;
+}
+@media only screen and (max-width: 760px) {
+  .enso-layout {
+    flex-direction: column;
+  }
+  .art-wrap {
+    flex: none;
+    width: 100%;
+  }
+  .controls {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* keep the title clear of the theme toggle and GitHub icon on phones */
+@media only screen and (max-width: 560px) {
+  #omg-header h1 {
+    padding-right: 96px;
+    font-size: min(2em, 6.2vw);
+  }
+  #omg-header + h2 {
+    padding-right: 40px;
+  }
+}

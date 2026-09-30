@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-063933E3C2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-063933E3C2");
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enso Maker: Zen Circle Brush Painting</title>
+    <meta
+      name="description"
+      content="Enso Maker: generate the Zen circle as a brush painting, with dry-brush streaks, ink, paper and a red seal, or draw your own, then download it as SVG or PNG."
+    />
+    <meta name="author" content="Olivier Giulieri" />
+    <link rel="canonical" href="https://evoluteur.github.io/enso-maker/" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="theme-color" content="#1a212d" />
+    <meta property="og:site_name" content="Enso Maker" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Enso Maker" />
+    <meta property="og:description" content="Paint the Zen circle in one breath: a generative enso with dry-brush streaks, or draw your own." />
+    <meta property="og:url" content="https://evoluteur.github.io/enso-maker/" />
+    <meta
+      property="og:image"
+      content="https://evoluteur.github.io/enso-maker/enso-maker.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Overpass"
+    />
+    <link id="omg-core-css" rel="stylesheet" href="css/core.css" />
+    <script>
+      // Themes (dark, light, evol-blue) are copies of omg-themes; set OMG_THEMES_BASE to link the hosted ones instead.
+      window.OMG_THEMES_BASE = ""; // or "https://evoluteur.github.io/omg-themes/" to link the hosted themes
+      window.OMG_DEFAULT_THEME = "dark";
+      (function () {
+        var t = window.OMG_DEFAULT_THEME;
+        try {
+          t = localStorage.getItem("omg-theme") || t;
+        } catch (e) {}
+        if (t !== "dark" && t !== "light" && t !== "evol-blue")
+          t = window.OMG_DEFAULT_THEME;
+        document.documentElement.setAttribute("data-theme", t);
+        // written here (not in the markup) so the saved theme loads before first paint
+        document.write(
+          '<link id="omg-theme-css" rel="stylesheet" href="' +
+            window.OMG_THEMES_BASE +
+            "css/themes/" +
+            t +
+            "/" +
+            t +
+            '.css" />',
+        );
+      })();
+    </script>
+    <link id="omg-density-css" rel="stylesheet" href="css/densities.css" />
+    <link rel="stylesheet" href="css/enso.css" />
+
+    <script src="js/omg.js"></script>
+    <script src="js/enso.js"></script>
+  </head>
+
+  <body
+    onload="
+      setupPage('home');
+      initEnso();
+    "
+    id="omg-body"
+  >
+    <div id="omg-header">
+      <h1>Enso Maker</h1>
+      <div id="omg-theme-picker"></div>
+      <a
+        id="omg-github"
+        href="https://github.com/evoluteur/enso-maker"
+        target="_blank"
+        rel="noopener"
+        title="Enso Maker on GitHub"
+        aria-label="Enso Maker on GitHub"
+        ><svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" /></svg
+      ></a>
+    </div>
+    <h2>The Zen circle, in one breath</h2>
+    <div class="content">
+      <div class="enso-layout">
+        <div id="art-wrap" class="art-wrap">
+          <div id="art" class="art" aria-label="Enso"></div>
+          <div id="guide" class="guide" aria-hidden="true"></div>
+        </div>
+        <div class="controls">
+          <button type="button" id="btn-new" class="new-btn">New enso</button>
+          <label class="check"><input type="checkbox" id="draw-mode" /> Draw your own</label>
+          <p id="draw-hint" class="draw-hint"></p>
+          <label>Opening <input id="open" type="range" min="0" max="40" value="12" /></label>
+          <label>Weight <input id="weight" type="range" min="0" max="100" value="50" /></label>
+          <label>Dry brush <input id="dry" type="range" min="0" max="100" value="50" /></label>
+          <label>Ink <select id="ink"></select></label>
+          <label>Paper <select id="paper"></select></label>
+          <label class="check"><input type="checkbox" id="seal" checked /> Seal</label>
+          <div class="downloads">
+            <button type="button" id="btn-svg" class="secondary">Download SVG</button>
+            <button type="button" id="btn-png" class="secondary">Download PNG</button>
+          </div>
+          <p class="share-note">The address of the page keeps this enso, to share it.</p>
+        </div>
+      </div>
+
+      <h3>About the enso</h3>
+      <div class="explain">
+        <p>
+          The <em>ensō</em> (円相, "circle form") is painted with a single
+          stroke of the brush, in one breath, and never retouched. In Zen it
+          stands for the moment when the mind is free to let the body create:
+          enlightenment, the universe, emptiness, and the beauty of the
+          imperfect. Monks and calligraphers have painted one a day as a
+          practice.
+        </p>
+        <p>
+          Some are closed, a full circle. Many are left open, a gap where the
+          brush lifts: a sign that nothing is ever complete, and that there is
+          room for something more. The dry, broken end of the stroke, where
+          the ink runs out, is called <em>kasure</em> and is part of its
+          beauty.
+        </p>
+        <p class="note">
+          Each enso is drawn as a bundle of bristles that lose their ink at
+          different rates along the stroke. The seal reads 円, "circle".
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>
+          Enso Maker is open source on
+          <a href="https://github.com/evoluteur/enso-maker">GitHub</a>
+          with an MIT license.
+        </p>
+        <p>
+          Had fun browsing the app?
+          <a href="https://github.com/sponsors/evoluteur"
+            >Buy me a coffee by becoming a sponsor</a
+          >.
+        </p>
+        <p>
+          You may also enjoy the <a href="https://evoluteur.github.io/zen-garden/">Zen Garden</a>, <a href="https://evoluteur.github.io/mandala-maker/">Mandala Maker</a> and <a href="https://evoluteur.github.io/sacred-geometry/">Sacred Geometry</a>. For more mystic arts as small web apps, see
+          <a href="https://evoluteur.github.io/esoterica.html">Esoterica</a>.
+        </p>
+        <p class="copyright">
+          &#169; 2026
+          <a href="https://evoluteur.github.io/">Olivier Giulieri</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
