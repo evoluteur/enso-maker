@@ -199,7 +199,6 @@ function artPoint(e) {
   return { x: ((e.clientX - r.left) / r.width) * S, y: ((e.clientY - r.top) / r.height) * S, time: e.timeStamp };
 }
 function startDraw(e) {
-  if (!$e("draw-mode").checked) return;
   e.preventDefault();
   $e("art").setPointerCapture(e.pointerId);
   drawing = [artPoint(e)];
@@ -301,10 +300,6 @@ function initEnso() {
   });
   $e("btn-svg").addEventListener("click", saveSvg);
   $e("btn-png").addEventListener("click", savePng);
-  $e("draw-mode").addEventListener("change", (e) => {
-    $e("art-wrap").classList.toggle("drawing", e.target.checked);
-    $e("draw-hint").textContent = e.target.checked ? "Draw a circle in one stroke: slow for a heavy line, fast for a light one." : "";
-  });
   const art = $e("art");
   art.addEventListener("pointerdown", startDraw);
   art.addEventListener("pointermove", moveDraw);
